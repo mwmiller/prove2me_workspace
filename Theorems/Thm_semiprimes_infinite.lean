@@ -7,4 +7,10 @@ Published as `semiprimes_infinite` (prove2.me, theorem id
 lives in `Solutions/Sol_semiprimes_infinite.lean`. -/
 
 theorem semiprimes_infinite : {n : ℕ | Nat.IsSemiprime n}.Infinite := by
-  sorry
+  apply Set.infinite_of_not_bddAbove
+  rw [not_bddAbove_iff]
+  intro a
+  obtain ⟨p, hp, hlt⟩ : ∃ p, p.Prime ∧ a < p := by
+    simpa using not_bddAbove_iff.1 Nat.not_bddAbove_setOfPred_prime a
+  exact ⟨p ^ 2, Nat.Prime.sq_isAlmostPrime_two hp,
+    by rw [pow_two]; nlinarith [hp.two_le]⟩

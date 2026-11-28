@@ -1,5 +1,4 @@
 import Mathlib
-import Theorems.Thm_prime_triplet_unique
 
 theorem solution (p : ℕ) (hp : p.Prime) (hp2 : (p + 2).Prime) (hp4 : (p + 4).Prime) :
     p = 3 := by

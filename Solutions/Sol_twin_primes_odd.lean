@@ -1,5 +1,4 @@
 import Mathlib
-import Theorems.Thm_twin_primes_odd
 
 theorem solution (p : ℕ) (hp : p.Prime) (hp2 : (p + 2).Prime) : Odd p ∧ Odd (p + 2) := by
   have hne2 : p ≠ 2 := fun h2 => by

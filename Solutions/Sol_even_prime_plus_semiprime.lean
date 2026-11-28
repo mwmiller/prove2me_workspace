@@ -1,5 +1,4 @@
 import Mathlib
-import Theorems.Thm_even_prime_plus_semiprime
 
 /-! # Arbitrarily large even integers are a prime plus a semiprime
 

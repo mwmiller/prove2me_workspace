@@ -1,5 +1,4 @@
 import Mathlib
-import Theorems.Thm_prime_quadruplet_gap2
 
 theorem solution :
     ¬∃ p : ℕ, p.Prime ∧ (p + 2).Prime ∧ (p + 4).Prime ∧ (p + 6).Prime := by

@@ -1,5 +1,4 @@
 import Mathlib
-import Theorems.Thm_twin_primes_coprime
 
 theorem solution (p : ℕ) (hp : p.Prime) (hp2 : (p + 2).Prime) : p.Coprime (p + 2) := by
   rw [hp.coprime_iff_not_dvd]

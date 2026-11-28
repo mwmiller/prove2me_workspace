@@ -1,5 +1,4 @@
 import Mathlib
-import Theorems.Thm_semiprime_iff_prime_mul
 
 /-! # Semiprimes are products of two primes
 

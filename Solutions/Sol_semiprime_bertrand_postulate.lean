@@ -1,5 +1,4 @@
 import Mathlib
-import Theorems.Thm_semiprime_bertrand_postulate
 
 /-! # Bertrand's postulate for semiprimes
 

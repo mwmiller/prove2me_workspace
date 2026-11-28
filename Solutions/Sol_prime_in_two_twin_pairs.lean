@@ -1,5 +1,4 @@
 import Mathlib
-import Theorems.Thm_prime_in_two_twin_pairs
 
 theorem solution (r : ℕ) (hr : r.Prime) (h₁ : (r - 2).Prime) (h₂ : (r + 2).Prime) :
     r = 5 := by

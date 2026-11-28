@@ -1,5 +1,4 @@
 import Mathlib
-import Theorems.Thm_semiprimes_infinite
 
 /-! # There are infinitely many semiprimes
 
