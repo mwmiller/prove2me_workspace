@@ -3,7 +3,6 @@ import Definitions.Def_IsEdenicSemiprime
 import Definitions.Def_IsGapSemiprime
 import Definitions.Def_IsCousinSemiprime
 import Definitions.Def_semiprimeCounting
-import Theorems.Thm_cousin_semiprime_gcd
 
 theorem solution (m n : ℕ) (hm : IsCousinSemiprime m)
     (hn : IsCousinSemiprime n) (hmn : m ≠ n) :

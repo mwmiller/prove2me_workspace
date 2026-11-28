@@ -3,16 +3,16 @@ import Definitions.Def_IsEdenicSemiprime
 import Definitions.Def_IsGapSemiprime
 import Definitions.Def_IsCousinSemiprime
 import Definitions.Def_semiprimeCounting
-import Theorems.Thm_gap_semiprime_not_perfect
+import Theorems.Thm_gap_semiprime_sum_divisors
 
 theorem solution (k n : ℕ) (hn : n ≠ 6) (h : IsGapSemiprime k n) :
     ¬Nat.Perfect n := by
-  obtain ⟨p, hp, hq, rfl⟩ := h
   rintro hperf
-  have hp2 : 2 ≤ p := hp.two_le
   by_cases hk : k = 0
   · -- n = p², never a perfect number
+    obtain ⟨p, hp, hq, rfl⟩ := h
     subst hk
+    have hp2 : 2 ≤ p := hp.two_le
     have hpow : p * (p + 0) = p ^ 2 := by ring
     have h0 : 0 < p * (p + 0) := mul_pos hp.pos (by omega)
     have hsum : ∑ d ∈ (p * (p + 0)).divisors, d = 2 * (p * (p + 0)) :=
@@ -27,18 +27,10 @@ theorem solution (k n : ℕ) (hn : n ≠ 6) (h : IsGapSemiprime k n) :
       exact Nat.mul_le_mul hp2 (le_refl p)
     nlinarith
   · -- k ≠ 0: perfectness forces (p+1)(p+k+1) = 2p(p+k), whence k ≤ 1
-    have hc : p.Coprime (p + k) :=
-      (Nat.Prime.coprime_iff_not_dvd hp).mpr fun hd => by
-        rcases (Nat.dvd_prime hq).mp hd with h1 | h2
-        · exact absurd h1 hp.ne_one
-        · exact absurd (by omega) hk
-    have h0 : 0 < p * (p + k) := mul_pos hp.pos (by omega)
+    obtain ⟨p, hp, hq, rfl, hσ⟩ := gap_semiprime_sum_divisors k n hk h
+    have hp2 : 2 ≤ p := hp.two_le
     have hsum : ∑ d ∈ (p * (p + k)).divisors, d = 2 * (p * (p + k)) :=
-      (Nat.perfect_iff_sum_divisors_eq_two_mul h0).mp hperf
-    have hσ : ∑ d ∈ (p * (p + k)).divisors, d = (p + 1) * (p + k + 1) := by
-      rw [Nat.Coprime.sum_divisors_mul hc, Nat.Prime.divisors hp, Nat.Prime.divisors hq,
-        Finset.sum_pair hp.ne_one.symm, Finset.sum_pair hq.ne_one.symm]
-      ring
+      (Nat.perfect_iff_sum_divisors_eq_two_mul (mul_pos hp.pos (by omega))).mp hperf
     rw [hσ] at hsum
     have hexpand : (p + 1) * (p + k + 1) = p * (p + k) + p + (p + k) + 1 := by ring
     have hlin : p + (p + k) + 1 = p * (p + k) := by nlinarith

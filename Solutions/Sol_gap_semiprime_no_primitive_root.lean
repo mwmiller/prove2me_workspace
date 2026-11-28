@@ -3,11 +3,12 @@ import Definitions.Def_IsEdenicSemiprime
 import Definitions.Def_IsGapSemiprime
 import Definitions.Def_IsCousinSemiprime
 import Definitions.Def_semiprimeCounting
-import Theorems.Thm_gap_semiprime_no_primitive_root
+import Theorems.Thm_gap_semiprime_ge_even
 
 theorem solution (k n : ℕ) (hk : k % 2 = 0) (hk0 : 0 < k)
     (h : IsGapSemiprime k n) :
     ¬∃ g : ZMod n, IsPrimitiveRoot g (Nat.totient n) := by
+  have hbig0 : 3 * (k + 3) ≤ n := gap_semiprime_ge_even k n hk hk0 h
   obtain ⟨p, hp, hq, rfl⟩ := h
   rintro ⟨g, hg⟩
   have hp2 : 2 ≤ p := hp.two_le
@@ -23,7 +24,9 @@ theorem solution (k n : ℕ) (hk : k % 2 = 0) (hk0 : 0 < k)
     simp [Nat.mul_mod, hpe, show (p + k) % 2 = 1 from by omega]
   have hp3 : 3 ≤ p := by omega
   have hkk : 2 ≤ k := by omega
-  have hbig : 15 ≤ p * (p + k) := by nlinarith [hp3, hkk]
+  have hbig : 15 ≤ p * (p + k) := by
+    have hge : 3 * (k + 3) ≤ p * (p + k) := hbig0
+    nlinarith [hp3, hkk, hge]
   have hn0 : 0 < p * (p + k) := mul_pos hp.pos (by omega)
   have hm : 0 < Nat.totient (p * (p + k)) := Nat.totient_pos.mpr hn0
   have hm1 : 1 ≤ Nat.totient (p * (p + k)) := Nat.one_le_of_lt hm
